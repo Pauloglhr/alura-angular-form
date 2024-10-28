@@ -1,11 +1,20 @@
 <main class="principal">
   <h2 class="principal__titulo">Dados do cadastro</h2>
 
-  <form class="principal__formulario" id="formulario">
+  <form class="principal__formulario" id="formulario" #f="ngForm" (ngSubmit)="cadastrar(f)">
     <h3 class="principal__subtitulo">Dados pessoais</h3>
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="nome">Nome Completo</label>
-      <input name="nome" id="nome" class="campo__escrita">
+      <input name="nome" id="nome" class="campo__escrita" ngModel required minlength="2">
+      <div *ngIf="(f.controls['nome']?.errors && f.controls['nome']?.touched ||
+        f.controls['nome']?.dirty)">
+        <span class="erro__texto" *ngIf="f.controls['nome']?.errors?.['required']">
+          O campo é obrigatório.
+        </span>
+        <span class="erro__texto" *ngIf="f.controls['nome']?.errors?.['minlength']">
+          Digite pelo menos 2 caracteres.
+        </span>
+      </div>
     </div>
     <div class="formulario__dupla">
       <div class="formulario__campo">
